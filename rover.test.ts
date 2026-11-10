@@ -41,3 +41,8 @@ test('con l, el rover gira a la izquierda sin moverse', () => {
   assert.deepEqual(ejecutar({ x: 2, y: 3, direccion: 'S' }, ['l']), { x: 2, y: 3, direccion: 'E' });
   assert.deepEqual(ejecutar({ x: 2, y: 3, direccion: 'E' }, ['l']), { x: 2, y: 3, direccion: 'N' });
 });
+
+test('el rover sigue los comandos en orden: gira y luego avanza', () => {
+  const rover = { x: 2, y: 3, direccion: 'N' } as const;
+  assert.deepEqual(ejecutar(rover, ['f', 'r', 'f', 'f']), { x: 4, y: 4, direccion: 'E' });
+});
