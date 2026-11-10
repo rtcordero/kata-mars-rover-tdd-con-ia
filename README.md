@@ -47,11 +47,12 @@ Necesitas Node.js 24.12 o posterior (la versión fijada está en `.node-version`
 1. El historial: `git log --reverse --format=%s`. Cada mensaje describe el comportamiento del paso y acaba en su fase: `(rojo)`, `(verde)` o `(refactor)`.
 2. [`rover.test.ts`](rover.test.ts): los diez tests, que se leen como la especificación del rover.
 3. [`rover.ts`](rover.ts): la implementación final, y cómo creció con `git log -p rover.ts`. Algunos verdes parecen trampa a propósito, como sumar `comandos.length`: son lo mínimo para pasar el test de ese paso, y el test siguiente los desmonta.
-4. [`scripts/comprobar-historial.sh`](scripts/comprobar-historial.sh): recorre el historial y falla si un commit «(rojo)» pasa, o si uno «(verde)» o «(refactor)» no pasa los tests o la comprobación de tipos. La CI lo ejecuta en cada push; en local, con `npm run test:historial`.
+4. [`scripts/comprobar-historial.sh`](scripts/comprobar-historial.sh): recorre el historial y falla si un commit «(rojo)» pasa, si uno «(verde)» o «(refactor)» no pasa los tests o la comprobación de tipos, o si un «(verde)» toca los tests. Comprueba que cada rojo falla, no por qué. La CI lo ejecuta en cada push a `main` y en cada pull request; en local, con `npm run test:historial`.
+5. [`ejemplos/`](ejemplos/): la respuesta construida del agente que se excede, la del ciclo 2 del artículo. Pasa los tests de su paso y falla el de girar a la izquierda: `npm run ejemplo`.
 
 ## Versiones
 
-- Node.js 24.21.0 (`.node-version`). Cada commit se ha comprobado también con Node.js 26.13.0, y la CI pasa los tests en las dos versiones.
+- Node.js 24.22.2 (`.node-version`). Cada commit se ha comprobado también con Node.js 26.13.0, y la CI pasa los tests en las dos versiones.
 - TypeScript 7.0.2 y `@types/node` 24.19.2, fijados en `package.json`, solo para comprobar los tipos.
 - Tests con `node:test` y `node:assert/strict`, sin librerías.
 
@@ -59,7 +60,7 @@ Necesitas Node.js 24.12 o posterior (la versión fijada está en `.node-version`
 
 Desarrollado con el enfoque [IA Limpia](https://rubentejera.com/que-es-la-ia-limpia/): un agente de IA escribe el código siguiendo los pasos del artículo, los tests validan cada paso y el resultado se revisa y se aprueba a mano antes de publicarlo.
 
-**Las peticiones y respuestas del agente que muestra el artículo son ejemplos construidos**, no transcripciones de una sesión real. Se escribieron para ilustrar qué hacer en cada fase, y el código de la respuesta que se excede se ha ejecutado contra los tests de su paso.
+**Las peticiones y respuestas del agente que muestra el artículo son ejemplos construidos**, no transcripciones de una sesión real. Se escribieron para ilustrar qué hacer en cada fase, y el código de la respuesta que se excede está en `ejemplos/`, ejecutado contra los tests de su paso y el de girar a la izquierda.
 
 El historial reconstruye los pasos del artículo en su mismo orden, para poder recorrerlos uno a uno. La CI comprueba en cada push que cada rojo falla y cada verde y cada refactor pasan (`npm run test:historial`).
 
