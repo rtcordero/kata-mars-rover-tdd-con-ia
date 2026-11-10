@@ -1,7 +1,9 @@
 export type Direccion = 'N' | 'E' | 'S' | 'W';
 export type Comando = 'f' | 'b' | 'l' | 'r';
-export type Rover = { x: number; y: number; direccion: Direccion };
-export type Planeta = { ancho: number; alto: number };
+export type Posicion = { x: number; y: number };
+export type Rover = Posicion & { direccion: Direccion };
+export type Planeta = { ancho: number; alto: number; obstaculos: readonly Posicion[] };
+export type Informe = Rover & { obstaculo?: Posicion };
 
 const AVANCE: Record<Direccion, { x: number; y: number }> = {
   N: { x: 0, y: 1 },
@@ -13,9 +15,15 @@ const AVANCE: Record<Direccion, { x: number; y: number }> = {
 const DERECHA: Record<Direccion, Direccion> = { N: 'E', E: 'S', S: 'W', W: 'N' };
 const IZQUIERDA: Record<Direccion, Direccion> = { N: 'W', W: 'S', S: 'E', E: 'N' };
 
-export function ejecutar(rover: Rover, comandos: readonly Comando[], planeta: Planeta): Rover {
+export function ejecutar(rover: Rover, comandos: readonly Comando[], planeta: Planeta): Informe {
   let actual = rover;
-  for (const comando of comandos) actual = aplicar(actual, comando, planeta);
+  for (const comando of comandos) {
+    const siguiente = aplicar(actual, comando, planeta);
+    if (hayObstaculo(siguiente, planeta)) {
+      return { ...actual, obstaculo: { x: siguiente.x, y: siguiente.y } };
+    }
+    actual = siguiente;
+  }
   return actual;
 }
 
@@ -44,4 +52,8 @@ function desplazar(rover: Rover, sentido: 1 | -1, planeta: Planeta): Rover {
 // El planeta da la vuelta como el tablero del Pac-Man: lo que sale por un lado entra por el contrario.
 function dentroDelPlaneta(coordenada: number, medida: number): number {
   return (coordenada + medida) % medida;
+}
+
+function hayObstaculo(posicion: Posicion, planeta: Planeta): boolean {
+  return planeta.obstaculos.some((obstaculo) => obstaculo.x === posicion.x && obstaculo.y === posicion.y);
 }
