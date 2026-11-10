@@ -3,5 +3,5 @@ export type Comando = 'f' | 'b' | 'l' | 'r';
 export type Rover = { x: number; y: number; direccion: Direccion };
 
 export function ejecutar(rover: Rover, comandos: readonly Comando[]): Rover {
-  throw new Error('Sin implementar');
+  return rover;
 }
