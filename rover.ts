@@ -14,12 +14,24 @@ const IZQUIERDA: Record<Direccion, Direccion> = { N: 'W', W: 'S', S: 'E', E: 'N'
 
 export function ejecutar(rover: Rover, comandos: readonly Comando[]): Rover {
   let actual = rover;
-  for (const comando of comandos) {
-    const avance = AVANCE[actual.direccion];
-    if (comando === 'f') actual = { ...actual, x: actual.x + avance.x, y: actual.y + avance.y };
-    if (comando === 'b') actual = { ...actual, x: actual.x - avance.x, y: actual.y - avance.y };
-    if (comando === 'r') actual = { ...actual, direccion: DERECHA[actual.direccion] };
-    if (comando === 'l') actual = { ...actual, direccion: IZQUIERDA[actual.direccion] };
-  }
+  for (const comando of comandos) actual = aplicar(actual, comando);
   return actual;
+}
+
+function aplicar(rover: Rover, comando: Comando): Rover {
+  switch (comando) {
+    case 'f':
+      return desplazar(rover, 1);
+    case 'b':
+      return desplazar(rover, -1);
+    case 'r':
+      return { ...rover, direccion: DERECHA[rover.direccion] };
+    case 'l':
+      return { ...rover, direccion: IZQUIERDA[rover.direccion] };
+  }
+}
+
+function desplazar(rover: Rover, sentido: 1 | -1): Rover {
+  const avance = AVANCE[rover.direccion];
+  return { ...rover, x: rover.x + avance.x * sentido, y: rover.y + avance.y * sentido };
 }
