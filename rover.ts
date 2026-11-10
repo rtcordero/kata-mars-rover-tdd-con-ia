@@ -15,16 +15,16 @@ const IZQUIERDA: Record<Direccion, Direccion> = { N: 'W', W: 'S', S: 'E', E: 'N'
 
 export function ejecutar(rover: Rover, comandos: readonly Comando[], planeta: Planeta): Rover {
   let actual = rover;
-  for (const comando of comandos) actual = aplicar(actual, comando);
+  for (const comando of comandos) actual = aplicar(actual, comando, planeta);
   return actual;
 }
 
-function aplicar(rover: Rover, comando: Comando): Rover {
+function aplicar(rover: Rover, comando: Comando, planeta: Planeta): Rover {
   switch (comando) {
     case 'f':
-      return desplazar(rover, 1);
+      return desplazar(rover, 1, planeta);
     case 'b':
-      return desplazar(rover, -1);
+      return desplazar(rover, -1, planeta);
     case 'r':
       return { ...rover, direccion: DERECHA[rover.direccion] };
     case 'l':
@@ -32,7 +32,16 @@ function aplicar(rover: Rover, comando: Comando): Rover {
   }
 }
 
-function desplazar(rover: Rover, sentido: 1 | -1): Rover {
+function desplazar(rover: Rover, sentido: 1 | -1, planeta: Planeta): Rover {
   const avance = AVANCE[rover.direccion];
-  return { ...rover, x: rover.x + avance.x * sentido, y: rover.y + avance.y * sentido };
+  return {
+    ...rover,
+    x: dentroDelPlaneta(rover.x + avance.x * sentido, planeta.ancho),
+    y: dentroDelPlaneta(rover.y + avance.y * sentido, planeta.alto),
+  };
+}
+
+// El planeta da la vuelta como el tablero del Pac-Man: lo que sale por un lado entra por el contrario.
+function dentroDelPlaneta(coordenada: number, medida: number): number {
+  return (coordenada + medida) % medida;
 }
