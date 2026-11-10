@@ -12,7 +12,8 @@
   "scripts": {
     "test": "node --test",
     "check": "tsc",
-    "test:historial": "scripts/comprobar-historial.sh"
+    "test:historial": "scripts/comprobar-historial.sh",
+    "ejemplo": "node --test ejemplos/respuesta-que-se-excede.prueba.ts"
   },
   "devDependencies": {
     "@types/node": "24.19.2",
