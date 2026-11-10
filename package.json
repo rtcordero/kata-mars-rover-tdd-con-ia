@@ -11,7 +11,8 @@
   },
   "scripts": {
     "test": "node --test",
-    "check": "tsc"
+    "check": "tsc",
+    "test:historial": "scripts/comprobar-historial.sh"
   },
   "devDependencies": {
     "@types/node": "24.19.2",
