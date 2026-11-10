@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { ejecutar, type Planeta } from './rover.ts';
 
-const MARTE: Planeta = { ancho: 10, alto: 10 };
+const MARTE: Planeta = { ancho: 10, alto: 10, obstaculos: [] };
 
 test('sin comandos, el rover se queda donde está', () => {
   const rover = { x: 2, y: 3, direccion: 'N' } as const;
@@ -54,4 +54,15 @@ test('al cruzar un borde, el rover aparece por el lado contrario', () => {
   assert.deepEqual(ejecutar({ x: 4, y: 0, direccion: 'S' }, ['f'], MARTE), { x: 4, y: 9, direccion: 'S' });
   assert.deepEqual(ejecutar({ x: 9, y: 4, direccion: 'E' }, ['f'], MARTE), { x: 0, y: 4, direccion: 'E' });
   assert.deepEqual(ejecutar({ x: 0, y: 4, direccion: 'E' }, ['b'], MARTE), { x: 9, y: 4, direccion: 'E' });
+});
+
+test('ante un obstáculo, el rover se para en la última casilla libre y lo informa', () => {
+  const conUnaRoca: Planeta = { ancho: 10, alto: 10, obstaculos: [{ x: 2, y: 5 }] };
+  const rover = { x: 2, y: 3, direccion: 'N' } as const;
+  assert.deepEqual(ejecutar(rover, ['f', 'f', 'f', 'r'], conUnaRoca), {
+    x: 2,
+    y: 4,
+    direccion: 'N',
+    obstaculo: { x: 2, y: 5 },
+  });
 });
