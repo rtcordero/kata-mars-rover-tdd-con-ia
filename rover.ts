@@ -1,6 +1,7 @@
 export type Direccion = 'N' | 'E' | 'S' | 'W';
 export type Comando = 'f' | 'b' | 'l' | 'r';
 export type Rover = { x: number; y: number; direccion: Direccion };
+export type Planeta = { ancho: number; alto: number };
 
 const AVANCE: Record<Direccion, { x: number; y: number }> = {
   N: { x: 0, y: 1 },
@@ -12,7 +13,7 @@ const AVANCE: Record<Direccion, { x: number; y: number }> = {
 const DERECHA: Record<Direccion, Direccion> = { N: 'E', E: 'S', S: 'W', W: 'N' };
 const IZQUIERDA: Record<Direccion, Direccion> = { N: 'W', W: 'S', S: 'E', E: 'N' };
 
-export function ejecutar(rover: Rover, comandos: readonly Comando[]): Rover {
+export function ejecutar(rover: Rover, comandos: readonly Comando[], planeta: Planeta): Rover {
   let actual = rover;
   for (const comando of comandos) actual = aplicar(actual, comando);
   return actual;
