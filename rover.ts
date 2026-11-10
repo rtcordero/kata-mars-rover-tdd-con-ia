@@ -3,5 +3,6 @@ export type Comando = 'f' | 'b' | 'l' | 'r';
 export type Rover = { x: number; y: number; direccion: Direccion };
 
 export function ejecutar(rover: Rover, comandos: readonly Comando[]): Rover {
-  return rover;
+  if (comandos.length === 0) return rover;
+  return { ...rover, y: rover.y + 1 };
 }
