@@ -1,0 +1,20 @@
+{
+  "name": "kata-mars-rover-tdd-con-ia",
+  "version": "1.0.0",
+  "description": "Kata Mars Rover con TDD guiando a un agente de IA: un commit por cada fase del ciclo rojo-verde-refactor.",
+  "private": true,
+  "license": "MIT",
+  "author": "Rubén Tejera Cordero",
+  "type": "module",
+  "engines": {
+    "node": ">=24.12"
+  },
+  "scripts": {
+    "test": "node --test",
+    "check": "tsc"
+  },
+  "devDependencies": {
+    "@types/node": "24.19.2",
+    "typescript": "7.0.2"
+  }
+}
