@@ -9,11 +9,13 @@ const AVANCE: Record<Direccion, { x: number; y: number }> = {
   W: { x: -1, y: 0 },
 };
 
+const DERECHA: Record<Direccion, Direccion> = { N: 'E', E: 'S', S: 'W', W: 'N' };
+
 export function ejecutar(rover: Rover, comandos: readonly Comando[]): Rover {
   const avance = AVANCE[rover.direccion];
   const pasos = comandos.filter((c) => c === 'f').length - comandos.filter((c) => c === 'b').length;
   return {
-    ...rover,
+    direccion: comandos.includes('r') ? DERECHA[rover.direccion] : rover.direccion,
     x: rover.x + avance.x * pasos,
     y: rover.y + avance.y * pasos,
   };
