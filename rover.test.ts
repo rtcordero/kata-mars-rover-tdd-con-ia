@@ -34,3 +34,10 @@ test('con r, el rover gira a la derecha sin moverse', () => {
   assert.deepEqual(ejecutar({ x: 2, y: 3, direccion: 'S' }, ['r']), { x: 2, y: 3, direccion: 'W' });
   assert.deepEqual(ejecutar({ x: 2, y: 3, direccion: 'W' }, ['r']), { x: 2, y: 3, direccion: 'N' });
 });
+
+test('con l, el rover gira a la izquierda sin moverse', () => {
+  assert.deepEqual(ejecutar({ x: 2, y: 3, direccion: 'N' }, ['l']), { x: 2, y: 3, direccion: 'W' });
+  assert.deepEqual(ejecutar({ x: 2, y: 3, direccion: 'W' }, ['l']), { x: 2, y: 3, direccion: 'S' });
+  assert.deepEqual(ejecutar({ x: 2, y: 3, direccion: 'S' }, ['l']), { x: 2, y: 3, direccion: 'E' });
+  assert.deepEqual(ejecutar({ x: 2, y: 3, direccion: 'E' }, ['l']), { x: 2, y: 3, direccion: 'N' });
+});
