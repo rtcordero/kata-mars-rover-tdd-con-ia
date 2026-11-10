@@ -11,3 +11,8 @@ test('con f, el rover que mira al norte avanza una casilla', () => {
   const rover = { x: 2, y: 3, direccion: 'N' } as const;
   assert.deepEqual(ejecutar(rover, ['f']), { x: 2, y: 4, direccion: 'N' });
 });
+
+test('con varios f, el rover avanza una casilla por cada uno', () => {
+  const rover = { x: 2, y: 3, direccion: 'N' } as const;
+  assert.deepEqual(ejecutar(rover, ['f', 'f', 'f']), { x: 2, y: 6, direccion: 'N' });
+});
