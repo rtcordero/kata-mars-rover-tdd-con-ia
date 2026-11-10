@@ -5,7 +5,7 @@ export type Rover = Posicion & { direccion: Direccion };
 export type Planeta = { ancho: number; alto: number; obstaculos: readonly Posicion[] };
 export type Informe = Rover & { obstaculo?: Posicion };
 
-const AVANCE: Record<Direccion, { x: number; y: number }> = {
+const AVANCE: Record<Direccion, Posicion> = {
   N: { x: 0, y: 1 },
   E: { x: 1, y: 0 },
   S: { x: 0, y: -1 },
