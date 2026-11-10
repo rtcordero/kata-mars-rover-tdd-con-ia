@@ -13,15 +13,13 @@ const DERECHA: Record<Direccion, Direccion> = { N: 'E', E: 'S', S: 'W', W: 'N' }
 const IZQUIERDA: Record<Direccion, Direccion> = { N: 'W', W: 'S', S: 'E', E: 'N' };
 
 export function ejecutar(rover: Rover, comandos: readonly Comando[]): Rover {
-  const avance = AVANCE[rover.direccion];
-  const pasos = comandos.filter((c) => c === 'f').length - comandos.filter((c) => c === 'b').length;
-  return {
-    direccion: comandos.includes('r')
-      ? DERECHA[rover.direccion]
-      : comandos.includes('l')
-        ? IZQUIERDA[rover.direccion]
-        : rover.direccion,
-    x: rover.x + avance.x * pasos,
-    y: rover.y + avance.y * pasos,
-  };
+  let actual = rover;
+  for (const comando of comandos) {
+    const avance = AVANCE[actual.direccion];
+    if (comando === 'f') actual = { ...actual, x: actual.x + avance.x, y: actual.y + avance.y };
+    if (comando === 'b') actual = { ...actual, x: actual.x - avance.x, y: actual.y - avance.y };
+    if (comando === 'r') actual = { ...actual, direccion: DERECHA[actual.direccion] };
+    if (comando === 'l') actual = { ...actual, direccion: IZQUIERDA[actual.direccion] };
+  }
+  return actual;
 }
