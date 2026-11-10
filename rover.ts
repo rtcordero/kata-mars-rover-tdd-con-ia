@@ -11,9 +11,10 @@ const AVANCE: Record<Direccion, { x: number; y: number }> = {
 
 export function ejecutar(rover: Rover, comandos: readonly Comando[]): Rover {
   const avance = AVANCE[rover.direccion];
+  const pasos = comandos.filter((c) => c === 'f').length - comandos.filter((c) => c === 'b').length;
   return {
     ...rover,
-    x: rover.x + avance.x * comandos.length,
-    y: rover.y + avance.y * comandos.length,
+    x: rover.x + avance.x * pasos,
+    y: rover.y + avance.y * pasos,
   };
 }
