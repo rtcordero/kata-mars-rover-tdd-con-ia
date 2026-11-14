@@ -52,7 +52,7 @@ Necesitas Node.js 24.12 o posterior (la versión fijada está en `.node-version`
 
 ## Versiones
 
-- Node.js 24.22.2 (`.node-version`). Cada commit se ha comprobado también con Node.js 26.13.0, y la CI pasa los tests en las dos versiones.
+- Node.js 24.22.3 (`.node-version`). Cada commit se ha comprobado también con Node.js 26.13.1, y la CI pasa los tests en las dos versiones.
 - TypeScript 7.0.2 y `@types/node` 24.19.2, fijados en `package.json`, solo para comprobar los tipos.
 - Tests con `node:test` y `node:assert/strict`, sin librerías.
 
